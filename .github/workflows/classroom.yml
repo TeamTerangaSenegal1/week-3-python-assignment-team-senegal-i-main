@@ -1,0 +1,120 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: test_patient.py
+      id: test_patient-py
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test_patient.py
+        setup-command: pip install pytest
+        command: pytest test_patient.py
+        timeout: 10
+        max-score: 10
+    - name: test_doctor.py
+      id: test_doctor-py
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test_doctor.py
+        setup-command: pip install pytest
+        command: pytest test_doctor.py
+        timeout: 10
+        max-score: 10
+    - name: test_hospital_bed.py
+      id: test_hospital_bed-py
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test_hospital_bed.py
+        setup-command: pip install pytest
+        command: pytest test_hospital_bed.py
+        timeout: 10
+        max-score: 10
+    - name: test_blood_bank.py
+      id: test_blood_bank-py
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test_blood_bank.py
+        setup-command: pip install pytest
+        command: pytest test_blood_bank.py
+        timeout: 10
+        max-score: 10
+    - name: test_prescription.py
+      id: test_prescription-py
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test_prescription.py
+        setup-command: pip install pytest
+        command: pytest test_prescription.py
+        timeout: 10
+        max-score: 10
+    - name: test_mri_scan.py
+      id: test_mri_scan-py
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test_mri_scan.py
+        setup-command: pip install pytest
+        command: pytest test_mri_scan.py
+        timeout: 10
+        max-score: 10
+    - name: test_covid_test.py
+      id: test_covid_test-py
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test_covid_test.py
+        setup-command: pip install pytest
+        command: pytest test_covid_test.py
+        timeout: 10
+        max-score: 10
+    - name: test_vital_signs.py
+      id: test_vital_signs-py
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test_vital_signs.py
+        setup-command: pip install pytest
+        command: pytest test_vital_signs.py
+        timeout: 10
+        max-score: 10
+    - name: test_transplant_waitlist.py
+      id: test_transplant_waitlist-py
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test_transplant_waitlist.py
+        setup-command: pip install pytest
+        command: pytest test_transplant_waitlist.py
+        timeout: 10
+        max-score: 10
+    - name: test_cancer_treatment.py
+      id: test_cancer_treatment-py
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: test_cancer_treatment.py
+        setup-command: pip install pytest
+        command: pytest test_cancer_treatment.py
+        timeout: 10
+        max-score: 10
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST_PATIENT-PY_RESULTS: "${{steps.test_patient-py.outputs.result}}"
+        TEST_DOCTOR-PY_RESULTS: "${{steps.test_doctor-py.outputs.result}}"
+        TEST_HOSPITAL_BED-PY_RESULTS: "${{steps.test_hospital_bed-py.outputs.result}}"
+        TEST_BLOOD_BANK-PY_RESULTS: "${{steps.test_blood_bank-py.outputs.result}}"
+        TEST_PRESCRIPTION-PY_RESULTS: "${{steps.test_prescription-py.outputs.result}}"
+        TEST_MRI_SCAN-PY_RESULTS: "${{steps.test_mri_scan-py.outputs.result}}"
+        TEST_COVID_TEST-PY_RESULTS: "${{steps.test_covid_test-py.outputs.result}}"
+        TEST_VITAL_SIGNS-PY_RESULTS: "${{steps.test_vital_signs-py.outputs.result}}"
+        TEST_TRANSPLANT_WAITLIST-PY_RESULTS: "${{steps.test_transplant_waitlist-py.outputs.result}}"
+        TEST_CANCER_TREATMENT-PY_RESULTS: "${{steps.test_cancer_treatment-py.outputs.result}}"
+      with:
+        runners: test_patient-py,test_doctor-py,test_hospital_bed-py,test_blood_bank-py,test_prescription-py,test_mri_scan-py,test_covid_test-py,test_vital_signs-py,test_transplant_waitlist-py,test_cancer_treatment-py
